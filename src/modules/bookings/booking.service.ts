@@ -92,14 +92,18 @@ const bookVehicle = async (
   );
   return result;
 };
-const updateVehicleStatus = (vehicle_id: number, status: string) =>
-  pool.query(`UPDATE vehicles SET availability_status=$1 WHERE id=$2`, [
-    status,
-    vehicle_id,
-  ]);
-
 const updateBookingStatus = (id: string, status: string) => {
   return pool.query(`UPDATE bookings SET status=$1 WHERE id=$2`, [status, id]);
+};
+
+const updateVehicleStatus = (vehicle_id: number, status: string) => {
+  return pool.query(
+    `UPDATE vehicles SET availability_status=$1 WHERE id=$2`,
+    [status, vehicle_id]
+  );
+};
+const getBookingById = async (bookingId: string) => {
+  return pool.query(`SELECT * FROM bookings WHERE id=$1`, [bookingId]);
 };
 export const bookingServices = {
   getAllBookings,
@@ -108,4 +112,5 @@ export const bookingServices = {
   bookVehicle,
   updateVehicleStatus,
   updateBookingStatus,
+  getBookingById
 };

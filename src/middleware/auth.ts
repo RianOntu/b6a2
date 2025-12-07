@@ -9,6 +9,7 @@ const auth = (...roles: string[]) => {
       const token = tokenWithBearer?.split(' ')[1];
       if (!token) {
         return res.status(500).json({
+          success:false,
           message: 'You are not allowed',
         });
       }
@@ -19,6 +20,7 @@ const auth = (...roles: string[]) => {
       req.user = decoded;
       if (roles.length && !roles.includes(decoded.role)) {
         return res.status(500).json({
+          success:false,
           error: 'unauthorized',
         });
       }

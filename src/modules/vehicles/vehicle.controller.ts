@@ -41,7 +41,7 @@ const getVehicles = async (req: Request, res: Response) => {
 };
 const getSingleVehicle = async (req: Request, res: Response) => {
   const singleVehicle = await vehicleServices.getSingleVehicle(
-    req.params.id as string
+    req.params.vehicleId as string
   );
   if (singleVehicle.rows.length === 0) {
     res.status(404).json({
@@ -64,8 +64,8 @@ const updateSingleVehicle = async (req: Request, res: Response) => {
     daily_rent_price,
     availability_status,
   } = req.body;
-  const { id } = req.params;
-  const existing = await vehicleServices.getExisting(id as string);
+  const { vehicleId } = req.params;
+  const existing = await vehicleServices.getExisting(vehicleId as string);
 
   if (existing.rows.length === 0) {
     return res.status(404).json({
@@ -91,7 +91,7 @@ const updateSingleVehicle = async (req: Request, res: Response) => {
     updated_registration_number,
     updated_daily_rent_price,
     updated_availability_status,
-    id!
+    vehicleId!
   );
 
   res.status(200).json({

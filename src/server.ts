@@ -15,7 +15,7 @@ initDB();
 app.use('/api/v1/auth', userRoutes);
 
 app.use('/api/v1/users', userRoutes);
-app.use('/api/v1/users/:userId', userRoutes);
+app.use('/api/v1/users', userRoutes);
 
 app.use('/api/v1/vehicles', vehicleRoutes);
 

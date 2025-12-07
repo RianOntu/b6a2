@@ -110,10 +110,11 @@ const updateBookingStatus = async (req: Request, res: Response) => {
   try {
     const { bookingId } = req.params;
     const user = req.user;
+    const { status } = req.body;
 
-    const bookingRes = (await bookingServices.getBookingsByUser(
+    const bookingRes = await bookingServices.getBookingById(
       bookingId as string
-    )) as any;
+    );
     const booking = bookingRes.rows[0];
 
     if (!booking) {
@@ -134,6 +135,11 @@ const updateBookingStatus = async (req: Request, res: Response) => {
         booking.vehicle_id,
         'available'
       );
+
+      return res.status(200).json({
+        success: true,
+        message: 'Booking auto-returned by system',
+      });
     }
 
     if (user?.role === 'customer') {
@@ -147,7 +153,14 @@ const updateBookingStatus = async (req: Request, res: Response) => {
       if (now >= new Date(booking.rent_start_date)) {
         return res.status(400).json({
           success: false,
-          message: 'You cannot cancel a booking after its start date',
+          message: 'You cannot cancel after the start date',
+        });
+      }
+
+      if (status !== 'cancelled') {
+        return res.status(400).json({
+          success: false,
+          message: 'Customers can only cancel bookings',
         });
       }
 
@@ -167,6 +180,13 @@ const updateBookingStatus = async (req: Request, res: Response) => {
     }
 
     if (user?.role === 'admin') {
+      if (status !== 'returned') {
+        return res.status(400).json({
+          success: false,
+          message: 'Admin can only mark booking as returned',
+        });
+      }
+
       await bookingServices.updateBookingStatus(
         bookingId as string,
         'returned'
@@ -197,5 +217,5 @@ const updateBookingStatus = async (req: Request, res: Response) => {
 export const bookingController = {
   getBookings,
   bookVehicle,
-  updateBookingStatus
+  updateBookingStatus,
 };
