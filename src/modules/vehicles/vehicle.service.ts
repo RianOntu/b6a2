@@ -37,7 +37,7 @@ const updateSingleVehicle = async (
   id: string
 ) => {
   const result = pool.query(
-    `UPDATE vehicles SET vehicle_name=$1,type=$2,registration_number=$3,daily_rent_price=$4,availability_status=$5 WHERE id=$6`,
+    `UPDATE vehicles SET vehicle_name=$1,type=$2,registration_number=$3,daily_rent_price=$4,availability_status=$5 WHERE id=$6 RETURNING *`,
     [
       updated_vehicle_name,
       updated_type,

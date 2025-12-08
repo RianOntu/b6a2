@@ -139,6 +139,7 @@ const updateBookingStatus = async (req: Request, res: Response) => {
       return res.status(200).json({
         success: true,
         message: 'Booking auto-returned by system',
+        data: booking,
       });
     }
 
@@ -176,6 +177,7 @@ const updateBookingStatus = async (req: Request, res: Response) => {
       return res.status(200).json({
         success: true,
         message: 'Booking cancelled successfully',
+        data: booking,
       });
     }
 
@@ -199,6 +201,7 @@ const updateBookingStatus = async (req: Request, res: Response) => {
       return res.status(200).json({
         success: true,
         message: 'Booking marked as returned',
+        data: booking,
       });
     }
 
