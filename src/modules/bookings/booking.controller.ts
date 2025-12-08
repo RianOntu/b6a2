@@ -21,7 +21,7 @@ const getBookings = async (req: Request, res: Response) => {
 
     return res.status(200).json({
       success: true,
-      message: 'User bookings fetched successfully',
+      message: 'Your bookings fetched successfully',
       data: result,
     });
   } catch (error: any) {
