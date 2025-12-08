@@ -51,7 +51,7 @@ const getSingleVehicle = async (req: Request, res: Response) => {
   } else {
     res.status(200).json({
       success: true,
-      message: 'User found',
+      message: 'Vehicle found',
       data: singleVehicle.rows[0],
     });
   }
